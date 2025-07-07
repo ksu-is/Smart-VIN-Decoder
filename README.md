@@ -4,6 +4,5 @@
 
 ## Sources
 
-1) https://github.com/davidpeckham/vpic-api
-2) https://github.com/arpuffer/pyvin
+1) https://github.com/idlesign/vininfo
 3) https://vpic.nhtsa.dot.gov/api/
