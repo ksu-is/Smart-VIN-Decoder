@@ -4,7 +4,7 @@
 - [x] Assign Owner/Maintainer role to each team member  
 - [x] Create & commit changes to the README.md file  
 - [x] Create & commit changes to the projectroadmap.md file  
-- [ ] Clone and evaluate a similar VIN decoder repo  
+- [x] Clone and evaluate a similar VIN decoder repo  
 - [ ] Design the functions of the software  
 - [ ] Integrate NHTSA VIN API  
 - [ ] Begin basic program  
