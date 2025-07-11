@@ -5,9 +5,9 @@
 - [x] Create & commit changes to the README.md file  
 - [x] Create & commit changes to the projectroadmap.md file  
 - [x] Clone and evaluate a similar VIN decoder repo  
-- [ ] Design the functions of the software  
-- [ ] Integrate NHTSA VIN API  
-- [ ] Begin basic program  
+- [x] Design the functions of the software  
+- [x] Integrate NHTSA VIN API  
+- [x] Begin basic program  
 - [ ] Test repo and make sure the basic program works  
 - [ ] Update the checklist  
 
