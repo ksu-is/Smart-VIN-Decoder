@@ -12,9 +12,9 @@
 - [x] Update the checklist  
 
 ## Sprint 2 Steps
-- [ ] 1) add menu
-- [ ] 2) add VIN history
-- [ ] 3) add back to menu option
+- [x] 1) add menu (tested)
+- [x] 2) add VIN history (tested)
+- [x] 3) add back to menu option (tested)
 - [ ] 4) delete vin history option
 - [ ] 5) unknown to the list option if there is no data for device
 - [ ] 6) add about section
