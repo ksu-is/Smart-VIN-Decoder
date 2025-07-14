@@ -68,27 +68,51 @@ def input_history():
         #printing the VIN and its corresponding model and make
         print("{}. {} (VIN: {})".format(i + 1, model, vin))
 
+    while True: #back option
+        choice = input("\nSelect a number to re-view details or type 'back' to return to menu: ").strip().lower()
+
+        if choice == "back":
+            break
+        elif choice.isdigit():
+            index = int(choice) - 1 #converts the user's input (string) to an integer and subtracts 1 to get the correct index
+            if 0 <= index < len(vin_list): #checks the index is within the range of the vin_list
+                selected_vin = vin_list[index] # get the selected VIN from the list
+                decode_vin(selected_vin) # decode the selected VIN
+                break
+            else:
+                print("\ninvalid choice. Try Again.") 
+        else:
+            print("\nPlease enter a valid number or 'back' to return to the menu.")
+    
+
 #main funct to run the program
 def main():
     print("Welcome to the Smart VIN Decoder!")
 
     while True: # loop to ask for uer input
-        print("\n =========== Menu ===========")
+        print("\n ========= Menu =========")
         print("1) Decode a VIN")
         print("2) View Decoded VIN History")
         print("3) Exit")
-        print("==============================") #stylizing the menu
+        print("==========================") #stylizing the menu
         choice = input("Select an Option (1-3): ").strip() #taking the user input and stripping whitespace
-        print("==============================")
+        print("==========================")
+
+        #ask the user for choice
         if choice == "1": #vin decoding option
             vin = input("\nEnter a 17-character VIN: ").strip().upper()
+
+            #option 1: decode vin
             if is_valid_vin(vin):
                 decode_vin(vin)
             else:
                 print("Invalid VIN. Please try again.")
-        elif choice == "2": #vin history
+
+        #option 2: vin history
+        elif choice == "2": 
             input_history()
         
+        #option 3: exit
         elif choice == "3": #exit option
             print("Thank you for using the VIN Decoder! Goodbye!")
             break 
