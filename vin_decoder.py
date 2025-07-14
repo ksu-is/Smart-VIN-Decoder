@@ -42,20 +42,23 @@ def is_valid_vin(vin):
     
 #main funct to run the program
 def main():
-    print("Welcome to the VIN Decoder!")
-    print("Created by Sam Miller\n")
+    print("Welcome to the Smart VIN Decoder!")
 
-while True: # loop to continuously ask for user input
-    user_input = input("Please enter a 17-character VIN (or type 'exit' to quit): ")
-    vin = user_input.strip().upper() #the input to be stripped of whitespace and converted to uppercase
+    while True: # loop to ask for uer input
+        print("\n Menu")
+        print("1) Decode a VIN")
+        print("2) Exit")
+        choice = input("Select an Option (1-2): ").strip() #taking the user input and stripping whitespace
 
-    if vin == 'EXIT':
-        print("Thank you for using the VIN Decoder!")
-        break
-    elif is_valid_vin(vin):
-        decode_vin(vin)
-    else:
-        print("Invalid VIN. Please try again.")
+        if choice == "1":
+            vin = input("\nEnter a 17-character VIN: ").strip().upper()
+            if is_valid_vin(vin):
+                decode_vin(vin)
+            else:
+                print("Invalid VIN. Please try again.")
+        elif choice == "2":
+            print("Thank you for using the VIN Decoder! Goodbye!")
+            break 
 
 #start the program
 if __name__ == "__main__":
