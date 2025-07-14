@@ -1,5 +1,7 @@
 import requests # =importing requests library to make HTTP requests
 
+vin_history = {} # list to store the history of VINs decoded
+
 def decode_vin(vin): # Function to decode a VIN
     url = 'https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/' + vin + '?format=json' # URL for the NHTSA API
 
@@ -7,13 +9,22 @@ def decode_vin(vin): # Function to decode a VIN
 
     # the code 200 shows that the request was successful
     if response.status_code == 200: 
-
         data = response.json() # parsing the json response from the api
         result = data["Results"][0] # get the first result from the response
+
+        key_fields = ["Make", "Model", "ModelYear"] #defining the key fields to be displayed 
+        if all (result[field] == "" for field in key_fields): # checking if the key fields are empty
+            print("Error: No data found for the provided VIN.")
+            return
+        
+        #store the VIN + model in the history 
+        model = result["Make"]
+        vin_history[vin] = model
 
     #vehicle information/summary
 
         print("\nVehicle Information:")
+        print(" =====================")
         print("Make:             ", result["Make"])
         print("Model:            ", result["Model"])
         print("Model Year:       ", result["ModelYear"])
@@ -23,6 +34,8 @@ def decode_vin(vin): # Function to decode a VIN
         print("Fuel Type:        ", result["FuelTypePrimary"])
         print("Vehicle Type:     ", result["VehicleType"])
         print("Plant City:       ", result["PlantCity"])
+        print(" =====================")
+
     else:
         print("Error: Could not connect to the NHTSA API.")
 
@@ -39,27 +52,48 @@ def is_valid_vin(vin):
         return False
     else:
         return True
-    
+
+def input_history():
+    if not input_history:
+        print("No VINs decoded yet.")
+        return
+
+    print("\nPreviously Decoded VINs: ")
+    vin_list = list(vin_history.keys()) # get the keys from the vin_history dictionary
+
+    for i in range(len(vin_list)):
+
+        vin = vin_list[i] # get the VIN from the list at index i
+        model = vin_history[vin] # try to get the decoded model from the vin_history dictionary
+        #printing the VIN and its corresponding model and make
+        print("{}. {} (VIN: {})".format(i + 1, model, vin))
+
 #main funct to run the program
 def main():
     print("Welcome to the Smart VIN Decoder!")
 
     while True: # loop to ask for uer input
-        print("\n Menu")
+        print("\n =========== Menu ===========")
         print("1) Decode a VIN")
-        print("2) Exit")
-        choice = input("Select an Option (1-2): ").strip() #taking the user input and stripping whitespace
-
-        if choice == "1":
+        print("2) View Decoded VIN History")
+        print("3) Exit")
+        print("==============================") #stylizing the menu
+        choice = input("Select an Option (1-3): ").strip() #taking the user input and stripping whitespace
+        print("==============================")
+        if choice == "1": #vin decoding option
             vin = input("\nEnter a 17-character VIN: ").strip().upper()
             if is_valid_vin(vin):
                 decode_vin(vin)
             else:
                 print("Invalid VIN. Please try again.")
-        elif choice == "2":
+        elif choice == "2": #vin history
+            input_history()
+        
+        elif choice == "3": #exit option
             print("Thank you for using the VIN Decoder! Goodbye!")
             break 
-
+        else: #if the user enters an invalid option
+            print("Invalid choice. Please select a valid option (1-3).")
 #start the program
 if __name__ == "__main__":
     main() # calling the main function to run the program
