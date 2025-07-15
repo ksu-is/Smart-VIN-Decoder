@@ -2,9 +2,9 @@ import requests # =importing requests library to make HTTP requests
 
 vin_history = {} # list to store the history of VINs decoded
 
-def decode_vin(vin): # Function to decode a VIN
+def decode_vin(vin, allow_repeat=False): # Function to decode a VIN
 
-    if vin in vin_history: #checking to see if the vin has already been stored in the history
+    if vin in vin_history and not allow_repeat: #checking to see if the vin has already been stored in the history
         print("This VIN has already been decoded.")
         return
 
@@ -23,22 +23,22 @@ def decode_vin(vin): # Function to decode a VIN
             return
         
         #store the VIN + model in the history 
-        model = result["Make"]
+        model = result["Make"] or "Unknown Model"
         vin_history[vin] = model
 
     #vehicle information/summary
 
-        print("\nVehicle Information:")
+        print("\nVehicle Information:", vin)
         print(" =====================")
-        print("Make:             ", result["Make"])
-        print("Model:            ", result["Model"])
-        print("Model Year:       ", result["ModelYear"])
-        print("Manufacturer:     ", result["Manufacturer"])
-        print("Engine Model:     ", result["EngineModel"])
-        print("Engine Cylinders: ", result["EngineCylinders"])
-        print("Fuel Type:        ", result["FuelTypePrimary"])
-        print("Vehicle Type:     ", result["VehicleType"])
-        print("Plant City:       ", result["PlantCity"])
+        print("Make:             ", result["Make"] or "UNAVAILABLE")
+        print("Model:            ", result["Model"] or "UNAVAILABLE")
+        print("Model Year:       ", result["ModelYear"] or "UNAVAILABLE")
+        print("Manufacturer:     ", result["Manufacturer"] or "UNAVAILABLE")
+        print("Engine Model:     ", result["EngineModel"] or "UNAVAILABLE")
+        print("Engine Cylinders: ", result["EngineCylinders"] or "UNAVAILABLE")
+        print("Fuel Type:        ", result["FuelTypePrimary"] or "UNAVAILABLE")
+        print("Vehicle Type:     ", result["VehicleType"] or "UNAVAILABLE")
+        print("Plant City:       ", result["PlantCity"] or "UNAVAILABLE")
         print(" =====================")
 
     else:
@@ -82,7 +82,7 @@ def input_history():
             index = int(choice) - 1 #converts the user's input (string) to an integer and subtracts 1 to get the correct index
             if 0 <= index < len(vin_list): #checks the index is within the range of the vin_list
                 selected_vin = vin_list[index] # get the selected VIN from the list
-                decode_vin(selected_vin) # decode the selected VIN
+                decode_vin(selected_vin, allow_repeat=True) # decode the selected VIN
                 break
             else:
                 print("\ninvalid choice. Try Again.") 
@@ -145,7 +145,7 @@ def main():
         if choice == "1": #vin decoding option
             while True: #loop to ask for a VIN
                 print("Type 'back' to return to the menu.\n")
-                vin = input("\nEnter a 17-character VIN: ").strip().upper()
+                vin = input("\nEnter a 17-character VIN (or type 'back' to return to menu): ").strip().upper()
 
                 if vin.lower() == "back":
                     break
