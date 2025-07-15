@@ -2,7 +2,8 @@ import requests # =importing requests library to make HTTP requests
 
 vin_history = {} # list to store the history of VINs decoded
 
-def decode_vin(vin, allow_repeat=False): # Function to decode a VIN
+# Function to decode a VIN
+def decode_vin(vin, allow_repeat=False): 
 
     if vin in vin_history and not allow_repeat: #checking to see if the vin has already been stored in the history
         print("This VIN has already been decoded.")
@@ -24,12 +25,12 @@ def decode_vin(vin, allow_repeat=False): # Function to decode a VIN
         
         #store the VIN + model in the history 
         model = result["Make"] or "Unknown Model"
-        vin_history[vin] = model
+        vin_history[vin] = model 
 
     #vehicle information/summary
 
-        print("\nVehicle Information:", vin)
-        print(" =====================")
+        print("\n🚗 Vehicle Information:", vin)
+        print("~=============================~")
         print("Make:             ", result["Make"] or "UNAVAILABLE")
         print("Model:            ", result["Model"] or "UNAVAILABLE")
         print("Model Year:       ", result["ModelYear"] or "UNAVAILABLE")
@@ -39,7 +40,7 @@ def decode_vin(vin, allow_repeat=False): # Function to decode a VIN
         print("Fuel Type:        ", result["FuelTypePrimary"] or "UNAVAILABLE")
         print("Vehicle Type:     ", result["VehicleType"] or "UNAVAILABLE")
         print("Plant City:       ", result["PlantCity"] or "UNAVAILABLE")
-        print(" =====================")
+        print("~=============================~")
 
     else:
         print("Error: Could not connect to the NHTSA API.")
@@ -47,17 +48,20 @@ def decode_vin(vin, allow_repeat=False): # Function to decode a VIN
 #validating the VIN format (7 characters letters & numbers)
 def is_valid_vin(vin):
     if len(vin) != 17:
-        print("Error: VIN must be 17 characters long.")
+        print("\nError: VIN must be 17 characters long.")
         return False
-    elif not vin.isalnum():
-        print("Error: The VIN must contain only letters and numbers.")
+    elif not vin.isalnum(): #checking if the VIN contains only letters and numbers
+        print("\nError: VIN must contain only letters and numbers.")
         return False
-    elif vin.isdigit():
-        print("Error: The VIN must contain at least one letter.")
+    elif vin.isdigit(): #cannot be all numbers
+        print("\nError: VIN cannot be only numbers. Must include letters.")
         return False
+    elif vin.isalpha(): #cannot be all letters
+        print("\nError: VIN cannot be only letters. Must include numbers.")
     else:
         return True
 
+# Function to view previously decoded VINs
 def input_history():
     if not input_history:
         print("No VINs decoded yet.")
@@ -90,6 +94,7 @@ def input_history():
             print("\nPlease enter a valid number or 'back' to return to the menu.")
     
 
+#function to delete a VIN from the history
 def delete_vin():
     if not vin_history:
         print("VIN history is empty. Nothing to delete.")
@@ -130,15 +135,20 @@ def delete_vin():
 def main():
     print("Welcome to the Smart VIN Decoder!")
 
+    #ask the user for input for their name
+    user_name = input("Please enter your name to start your session: ").strip().title()
+    print("\nHello, " + user_name + "! Let's decode some VINs.\n")
+
+
     while True: # loop to ask for uer input
-        print("\n ========= Menu =========")
+        print("\n ~========= Menu =========~")
         print("1) Decode a VIN")
         print("2) View Decoded VIN History")
         print("3) Delete a VIN from History")
         print("4) Exit")
-        print("==========================") #stylizing the menu
+        print("~==========================~") #stylizing the menu
         
-        
+        #taking the user input for the menu
         choice = input("Select an Option (1-4): ").strip() #taking the user input and stripping whitespace
 
         #ask the user for choice
@@ -165,7 +175,7 @@ def main():
 
         #option 4: exit
         elif choice == "4": #exit option
-            print("Thank you for using the VIN Decoder! Goodbye!")
+            print("\nGoodbye", user_name + "!", "Thank you for using the VIN Decoder! Goodbye!")
             break 
         else: #if the user enters an invalid option
             print("Invalid choice. Please select a valid option (1-4).")
