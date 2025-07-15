@@ -3,6 +3,11 @@ import requests # =importing requests library to make HTTP requests
 vin_history = {} # list to store the history of VINs decoded
 
 def decode_vin(vin): # Function to decode a VIN
+
+    if vin in vin_history: #checking to see if the vin has already been stored in the history
+        print("This VIN has already been decoded.")
+        return
+
     url = 'https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/' + vin + '?format=json' # URL for the NHTSA API
 
     response = requests.get(url) # making a GET request to the API
@@ -85,6 +90,42 @@ def input_history():
             print("\nPlease enter a valid number or 'back' to return to the menu.")
     
 
+def delete_vin():
+    if not vin_history:
+        print("VIN history is empty. Nothing to delete.")
+        return
+    
+    print("\n Previously Decoded VINs:")
+
+    vin_list = list(vin_history.keys()) #get the keys from the vin 
+
+    index = 0 #initializing the index to 0
+
+    while index <len(vin_list):
+        vin = vin_list[index] #get the vin from the list 
+        model = vin_history[vin] #fetching the decoded model from the history dictionary
+        print(str(index + 1) + ". " + model + " (VIN: " + vin + ")") #printing the vin and its corresponding model
+        index += 1 #incrementing the index by 1
+
+    while True: 
+        choice = input("\nType the number of the VIN to delete or 'back': ").strip().lower()
+        if choice == "back":
+            break
+
+        elif choice.isdigit():
+            selected_index = int(choice) - 1 #converting the user's input to an int and subtracting 1 to get the corrrect index
+            if selected_index >= 0 and selected_index < len(vin_list): #checks to make sure the selected index is within range
+                selected_vin = vin_list[selected_index] #get the selected VIN from the list
+                del vin_history[selected_vin] #deleting the selected vin from the history
+                print("VIN " + selected_vin + " has been deleted from history.")
+                break
+            else:
+                print("Invalid choice. Try again.")
+        else:
+            print("PLease enter a valid number or type 'back'.")
+    
+
+
 #main funct to run the program
 def main():
     print("Welcome to the Smart VIN Decoder!")
@@ -93,31 +134,43 @@ def main():
         print("\n ========= Menu =========")
         print("1) Decode a VIN")
         print("2) View Decoded VIN History")
-        print("3) Exit")
+        print("3) Delete a VIN from History")
+        print("4) Exit")
         print("==========================") #stylizing the menu
-        choice = input("Select an Option (1-3): ").strip() #taking the user input and stripping whitespace
-        print("==========================")
+        
+        
+        choice = input("Select an Option (1-4): ").strip() #taking the user input and stripping whitespace
 
         #ask the user for choice
         if choice == "1": #vin decoding option
-            vin = input("\nEnter a 17-character VIN: ").strip().upper()
+            while True: #loop to ask for a VIN
+                print("Type 'back' to return to the menu.\n")
+                vin = input("\nEnter a 17-character VIN: ").strip().upper()
 
-            #option 1: decode vin
-            if is_valid_vin(vin):
-                decode_vin(vin)
-            else:
-                print("Invalid VIN. Please try again.")
+                if vin.lower() == "back":
+                    break
+                #option 1: decode vin
+                elif is_valid_vin(vin):
+                    decode_vin(vin)
+                else:
+                    print("Invalid VIN. Please try again.")
 
         #option 2: vin history
         elif choice == "2": 
             input_history()
-        
-        #option 3: exit
-        elif choice == "3": #exit option
+
+        #option 3: delete vin
+        elif choice == "3": 
+            delete_vin()
+
+        #option 4: exit
+        elif choice == "4": #exit option
             print("Thank you for using the VIN Decoder! Goodbye!")
             break 
         else: #if the user enters an invalid option
-            print("Invalid choice. Please select a valid option (1-3).")
+            print("Invalid choice. Please select a valid option (1-4).")
+
+
 #start the program
 if __name__ == "__main__":
     main() # calling the main function to run the program
