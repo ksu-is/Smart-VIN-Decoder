@@ -23,6 +23,8 @@
 - [x] Update the checklist  
 
 ## Sprint 3 Steps
+- [x] Update code
+- [x] Test code
 - [ ] Create PowerPoint  
 - [ ] Upload PowerPoint  
 - [ ] Update the checklist  
