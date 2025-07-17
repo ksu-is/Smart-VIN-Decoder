@@ -63,7 +63,7 @@ def is_valid_vin(vin):
 
 # Function to view previously decoded VINs
 def input_history():
-    if not input_history:
+    if not vin_history:
         print("No VINs decoded yet.")
         return
 
@@ -96,14 +96,13 @@ def input_history():
 
 #function to delete a VIN from the history
 def delete_vin():
-    if not vin_history:
+    if not vin_history: #checking if the vin_history is empty
         print("VIN history is empty. Nothing to delete.")
         return
     
     print("\n Previously Decoded VINs:")
 
     vin_list = list(vin_history.keys()) #get the keys from the vin 
-
     index = 0 #initializing the index to 0
 
     while index <len(vin_list):
@@ -121,13 +120,19 @@ def delete_vin():
             selected_index = int(choice) - 1 #converting the user's input to an int and subtracting 1 to get the corrrect index
             if selected_index >= 0 and selected_index < len(vin_list): #checks to make sure the selected index is within range
                 selected_vin = vin_list[selected_index] #get the selected VIN from the list
-                del vin_history[selected_vin] #deleting the selected vin from the history
-                print("VIN " + selected_vin + " has been deleted from history.")
+                
+                confirm = input("\nAre you sure you want to delete VIN " + selected_vin + "? (yes/no): ").strip().lower() #confirming the deletion
+                if confirm == "yes" or confirm == "y":
+                    del vin_history[selected_vin]
+                    print("\nVIN " + selected_vin + " has been deleted from history.")
+                    break
+                elif confirm == "no" or confirm == "n": 
+                    print("\nDeletion of VIN " + selected_vin  + " cancelled.")
                 break
             else:
-                print("Invalid choice. Try again.")
+                print("\nInvalid choice. Please type 'yes' or 'no'.")
         else:
-            print("PLease enter a valid number or type 'back'.")
+            print("\nPlease enter a valid number or type 'back'.")
     
 
 
