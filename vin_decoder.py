@@ -180,7 +180,7 @@ def main():
 
         #option 4: exit
         elif choice == "4": #exit option
-            print("\nGoodbye", user_name + "!", "Thank you for using the VIN Decoder! Goodbye!")
+            print("\nGoodbye", user_name + "!", "Thank you for using the VIN Decoder!")
             break 
         else: #if the user enters an invalid option
             print("Invalid choice. Please select a valid option (1-4).")
