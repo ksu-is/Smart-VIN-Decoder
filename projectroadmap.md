@@ -25,9 +25,9 @@
 ## Sprint 3 Steps
 - [x] Update code
 - [x] Test code
-- [ ] Create PowerPoint  
-- [ ] Upload PowerPoint  
-- [ ] Update the checklist  
+- [x] Create PowerPoint  
+- [x] Upload PowerPoint  
+- [x] Update the checklist  
 
 ---
 
