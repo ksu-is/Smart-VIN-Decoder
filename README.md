@@ -1,5 +1,5 @@
 # Smart VIN Decoder
-
+This is my first project & I look forward to building off this. :D
 A solo Information Systems semester project by Sam Miller: a Python command-line application that looks up vehicle information through the NHTSA vPIC API. Built to practice API integration, JSON parsing, input checks, and organizing data in a menu-driven application.
 
 ## What it does
